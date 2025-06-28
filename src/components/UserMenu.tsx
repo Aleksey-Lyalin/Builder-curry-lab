@@ -69,15 +69,29 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
 
   return (
     <div className="relative" ref={menuRef}>
-      <Button
-        variant="ghost"
-        size="icon"
-        className={`text-gray-600 hover:text-sage-600 ${isAuthenticated ? "bg-green-100" : "bg-red-100"}`}
-        onClick={toggleMenu}
-        title={`Auth: ${isAuthenticated}, Role: ${user?.role || "none"}`}
-      >
-        <User className="w-5 h-5" />
-      </Button>
+      <div className="flex gap-1">
+        <Button
+          variant="ghost"
+          size="icon"
+          className={`text-gray-600 hover:text-sage-600 ${isAuthenticated ? "bg-green-100" : "bg-red-100"}`}
+          onClick={toggleMenu}
+          title={`Auth: ${isAuthenticated}, Role: ${user?.role || "none"}`}
+        >
+          <User className="w-5 h-5" />
+        </Button>
+        {/* Temporary admin button */}
+        {isAuthenticated && user?.role !== "admin" && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs bg-orange-100 hover:bg-orange-200"
+            onClick={makeAdmin}
+            title="Click to make admin"
+          >
+            Make Admin
+          </Button>
+        )}
+      </div>
 
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
@@ -186,7 +200,7 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
                   Добро пожаловать!
                 </h3>
                 <p className="text-sm text-gray-500 mb-4">
-                  Войдите в аккаунт, чтобы делать покупки и отслеживать заказы
+                  Войдите в аккаунт, чтобы делать покупки �� отслеживать заказы
                 </p>
               </div>
 
