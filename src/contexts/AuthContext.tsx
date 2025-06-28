@@ -55,6 +55,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (savedUser) {
       try {
         const user = JSON.parse(savedUser);
+        // Convert createdAt string back to Date object
+        if (user.createdAt && typeof user.createdAt === "string") {
+          user.createdAt = new Date(user.createdAt);
+        }
         setAuthState({
           user,
           isLoading: false,

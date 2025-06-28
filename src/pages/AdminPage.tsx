@@ -49,7 +49,7 @@ const AdminPage = () => {
               Панель администратора
             </h1>
             <p className="text-gray-600 mt-2">
-              Управление магазином и контентом
+              Управление м��газином и контентом
             </p>
           </div>
 
@@ -168,7 +168,9 @@ const AdminPage = () => {
                                 {order.id}
                               </h3>
                               <p className="text-sm text-gray-500">
-                                {order.createdAt.toLocaleDateString("ru-RU")}
+                                {new Date(order.createdAt).toLocaleDateString(
+                                  "ru-RU",
+                                )}
                               </p>
                             </div>
                             <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700">

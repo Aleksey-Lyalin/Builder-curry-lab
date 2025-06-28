@@ -142,7 +142,9 @@ const AccountPage = () => {
                           Дата регистрации
                         </label>
                         <p className="text-gray-900">
-                          {user!.createdAt.toLocaleDateString("ru-RU")}
+                          {new Date(user!.createdAt).toLocaleDateString(
+                            "ru-RU",
+                          )}
                         </p>
                       </div>
                     </div>
@@ -167,7 +169,9 @@ const AccountPage = () => {
                                   Заказ {order.id}
                                 </h3>
                                 <p className="text-sm text-gray-500">
-                                  {order.createdAt.toLocaleDateString("ru-RU")}
+                                  {new Date(order.createdAt).toLocaleDateString(
+                                    "ru-RU",
+                                  )}
                                 </p>
                               </div>
                               <span
@@ -259,7 +263,7 @@ const AccountPage = () => {
                       <div className="text-center py-12">
                         <Heart className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                         <h3 className="text-lg font-medium text-gray-900 mb-2">
-                          Нет избранных товаров
+                          Нет избранны�� товаров
                         </h3>
                         <p className="text-gray-500">
                           Добавляйте товары в избранное для быстрого доступа
@@ -289,7 +293,9 @@ const AccountPage = () => {
                               {message.isFromAdmin ? "Администратор" : "Вы"}
                             </span>
                             <span className="text-xs text-gray-500">
-                              {message.createdAt.toLocaleString("ru-RU")}
+                              {new Date(message.createdAt).toLocaleString(
+                                "ru-RU",
+                              )}
                             </span>
                           </div>
                           <p className="text-gray-700">{message.content}</p>
