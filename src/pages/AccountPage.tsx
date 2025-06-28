@@ -163,7 +163,7 @@ const ProfileEditor = ({ user }: ProfileEditorProps) => {
             </Button>
             <Button onClick={handleCancel} variant="outline">
               <X className="w-4 h-4 mr-2" />
-              ��тмена
+              Отмена
             </Button>
           </div>
         </div>
@@ -243,7 +243,7 @@ const ChatInterface = ({ userId }: ChatInterfaceProps) => {
     const userMessages = getMessagesByUserId(userId);
     setMessages(userMessages);
     markMessagesAsRead();
-  }, [userId, markMessagesAsRead]);
+  }, [userId]); // Removed markMessagesAsRead from dependencies to prevent infinite loop
 
   useEffect(() => {
     // Auto scroll to bottom when new messages arrive
@@ -492,7 +492,7 @@ const AccountPage = () => {
     { id: "profile", label: "Профиль", icon: User },
     { id: "orders", label: "Заказы", icon: Package },
     { id: "favorites", label: "Избранное", icon: Heart },
-    { id: "messages", label: "Сообщения", icon: MessageCircle },
+    { id: "messages", label: "Сообще��ия", icon: MessageCircle },
   ];
 
   return (

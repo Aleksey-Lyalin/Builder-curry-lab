@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { User, AuthState } from "@/types/user";
 
 interface AuthContextType extends AuthState {
@@ -134,9 +140,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const markMessagesAsRead = () => {
+  const markMessagesAsRead = useCallback(() => {
     updateUser({ unreadMessages: 0 });
-  };
+  }, []);
 
   return (
     <AuthContext.Provider
