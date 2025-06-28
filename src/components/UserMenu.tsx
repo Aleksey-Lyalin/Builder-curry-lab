@@ -21,6 +21,13 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const { isAuthenticated, user, logout } = useAuth();
 
+  // Debug logging
+  console.log("UserMenu Debug:", {
+    isAuthenticated,
+    user: user ? { id: user.id, name: user.name, role: user.role } : null,
+    isOpen,
+  });
+
   const handleLogout = () => {
     logout();
     setIsOpen(false);
