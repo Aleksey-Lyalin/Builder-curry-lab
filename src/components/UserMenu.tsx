@@ -28,6 +28,15 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
     isOpen,
   });
 
+  // Quick fix function to update role to admin
+  const makeAdmin = () => {
+    if (user) {
+      const updatedUser = { ...user, role: "admin" as const };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      window.location.reload(); // Reload to apply changes
+    }
+  };
+
   const handleLogout = () => {
     logout();
     setIsOpen(false);
