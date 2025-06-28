@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, Navigate } from "react-router-dom";
 import {
   Package,
@@ -10,16 +10,21 @@ import {
   Camera,
   Save,
   X,
+  Send,
+  Clock,
+  Check,
+  CheckCheck,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/contexts/AuthContext";
 import { getOrdersByUserId, getMessagesByUserId } from "@/data/orders";
 import { perfumes } from "@/data/perfumes";
 import ProductCard from "@/components/ProductCard";
-import { User as UserType } from "@/types/user";
+import { User as UserType, Message } from "@/types/user";
 
 interface ProfileEditorProps {
   user: UserType;
@@ -158,7 +163,7 @@ const ProfileEditor = ({ user }: ProfileEditorProps) => {
             </Button>
             <Button onClick={handleCancel} variant="outline">
               <X className="w-4 h-4 mr-2" />
-              Отмена
+              ��тмена
             </Button>
           </div>
         </div>
@@ -218,6 +223,244 @@ const ProfileEditor = ({ user }: ProfileEditorProps) => {
           </div>
         </div>
       )}
+    </div>
+  );
+};
+
+interface ChatInterfaceProps {
+  userId: string;
+}
+
+const ChatInterface = ({ userId }: ChatInterfaceProps) => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { markMessagesAsRead } = useAuth();
+
+  useEffect(() => {
+    // Load initial messages
+    const userMessages = getMessagesByUserId(userId);
+    setMessages(userMessages);
+    markMessagesAsRead();
+  }, [userId, markMessagesAsRead]);
+
+  useEffect(() => {
+    // Auto scroll to bottom when new messages arrive
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSendMessage = async () => {
+    if (!newMessage.trim()) return;
+
+    setIsLoading(true);
+
+    // Create new message
+    const userMessage: Message = {
+      id: `msg-${Date.now()}`,
+      userId,
+      content: newMessage.trim(),
+      isFromAdmin: false,
+      createdAt: new Date(),
+      isRead: false,
+    };
+
+    // Add user message
+    setMessages((prev) => [...prev, userMessage]);
+    setNewMessage("");
+
+    // Simulate admin response (in real app, this would be real-time)
+    setTimeout(() => {
+      const adminResponse: Message = {
+        id: `msg-${Date.now()}-admin`,
+        userId,
+        adminId: "2",
+        content: getAutomaticResponse(newMessage),
+        isFromAdmin: true,
+        createdAt: new Date(),
+        isRead: false,
+      };
+
+      setMessages((prev) => [...prev, adminResponse]);
+      setIsLoading(false);
+    }, 1500);
+  };
+
+  const getAutomaticResponse = (userMessage: string): string => {
+    const message = userMessage.toLowerCase();
+
+    if (message.includes("заказ") || message.includes("доставка")) {
+      return "Спасибо за ваш вопрос! Информацию о статусе заказа вы можете найти в разделе 'Мои заказы'. Если у вас есть конкретные вопросы, укажите номер заказа, и я помогу вам.";
+    } else if (message.includes("возврат") || message.includes("обмен")) {
+      return "Мы принимаем возвраты в течение 14 дней с момента получения товара. Парфюмерия должна быть в оригинальной упаковке и не использована. Для оформления возврата свяжитесь с нами.";
+    } else if (message.includes("скидка") || message.includes("акция")) {
+      return "Следите за нашими акциями в разделе 'Новости' и в наших социальных сетях. Также у нас есть программа лояльности для постоянных покупателей!";
+    } else if (message.includes("подарок") || message.includes("упаковка")) {
+      return "Мы предлагаем подарочную упаковку для всех товаров. Эта услуга доступна при оформлении заказа или вы можете указать это в комментариях к заказу.";
+    } else {
+      return "Спасибо за ваше сообщение! Наш специалист рассмотрит ваш вопрос и ответит в ближайшее время. Обычно мы отвечаем в течение 2-4 часов в рабочее время.";
+    }
+  };
+
+  const formatMessageTime = (date: Date) => {
+    const now = new Date();
+    const messageDate = new Date(date);
+    const diffInHours =
+      (now.getTime() - messageDate.getTime()) / (1000 * 60 * 60);
+
+    if (diffInHours < 24) {
+      return messageDate.toLocaleTimeString("ru-RU", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } else {
+      return messageDate.toLocaleDateString("ru-RU", {
+        day: "numeric",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  return (
+    <div className="h-96 flex flex-col">
+      {/* Chat Header */}
+      <div className="bg-sage-50 border-b border-sage-200 p-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-sage-600 rounded-full flex items-center justify-center">
+            <MessageCircle className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-gray-900">
+              Поддержка Little Daisy
+            </h3>
+            <p className="text-sm text-gray-500">
+              Обычно отвечаем в течение нескольких минут
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Messages Area */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+        {messages.length === 0 ? (
+          <div className="text-center py-8">
+            <MessageCircle className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              Добро пожаловать в чат поддержки!
+            </h3>
+            <p className="text-gray-500 max-w-md mx-auto">
+              Здесь вы можете задать любые вопросы о наших товарах, заказах или
+              доставке. Мы всегда готовы помочь!
+            </p>
+          </div>
+        ) : (
+          messages.map((message) => (
+            <div
+              key={message.id}
+              className={`flex ${message.isFromAdmin ? "justify-start" : "justify-end"}`}
+            >
+              <div
+                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
+                  message.isFromAdmin
+                    ? "bg-white border border-gray-200 rounded-bl-sm"
+                    : "bg-sage-600 text-white rounded-br-sm"
+                }`}
+              >
+                {message.isFromAdmin && (
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-4 h-4 bg-sage-600 rounded-full"></div>
+                    <span className="text-xs font-medium text-gray-600">
+                      Служба поддержки
+                    </span>
+                  </div>
+                )}
+                <p
+                  className={`text-sm leading-relaxed ${
+                    message.isFromAdmin ? "text-gray-800" : "text-white"
+                  }`}
+                >
+                  {message.content}
+                </p>
+                <div
+                  className={`flex items-center justify-end gap-1 mt-2 ${
+                    message.isFromAdmin ? "text-gray-400" : "text-sage-200"
+                  }`}
+                >
+                  <span className="text-xs">
+                    {formatMessageTime(message.createdAt)}
+                  </span>
+                  {!message.isFromAdmin && <CheckCheck className="w-3 h-3" />}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+
+        {isLoading && (
+          <div className="flex justify-start">
+            <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 max-w-xs">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-4 h-4 bg-sage-600 rounded-full"></div>
+                <span className="text-xs font-medium text-gray-600">
+                  Служба поддержки
+                </span>
+              </div>
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                <div
+                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.1s" }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Message Input */}
+      <div className="bg-white border-t border-gray-200 p-4">
+        <div className="flex gap-3 items-end">
+          <div className="flex-1">
+            <Textarea
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Напишите ваше сообщение..."
+              className="min-h-[44px] max-h-32 resize-none border-gray-300 focus:border-sage-500 focus:ring-sage-500"
+              disabled={isLoading}
+            />
+          </div>
+          <Button
+            onClick={handleSendMessage}
+            disabled={!newMessage.trim() || isLoading}
+            className="bg-sage-600 hover:bg-sage-700 disabled:opacity-50 px-4 py-3"
+            size="sm"
+          >
+            <Send className="w-4 h-4" />
+          </Button>
+        </div>
+        <p className="text-xs text-gray-500 mt-2">
+          Нажмите Enter для отправки, Shift+Enter для новой строки
+        </p>
+      </div>
     </div>
   );
 };
@@ -450,35 +693,7 @@ const AccountPage = () => {
                 )}
 
                 {activeTab === "messages" && (
-                  <div className="p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">
-                      Сообщения
-                    </h2>
-                    <div className="space-y-4">
-                      {userMessages.map((message) => (
-                        <div
-                          key={message.id}
-                          className={`p-4 rounded-lg ${
-                            message.isFromAdmin
-                              ? "bg-gray-50 ml-8"
-                              : "bg-sage-50 mr-8"
-                          }`}
-                        >
-                          <div className="flex justify-between items-start mb-2">
-                            <span className="text-sm font-medium">
-                              {message.isFromAdmin ? "Администратор" : "Вы"}
-                            </span>
-                            <span className="text-xs text-gray-500">
-                              {new Date(message.createdAt).toLocaleString(
-                                "ru-RU",
-                              )}
-                            </span>
-                          </div>
-                          <p className="text-gray-700">{message.content}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <ChatInterface userId={user!.id} />
                 )}
               </div>
             </div>
