@@ -63,8 +63,9 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
       <Button
         variant="ghost"
         size="icon"
-        className="text-gray-600 hover:text-sage-600"
+        className={`text-gray-600 hover:text-sage-600 ${isAuthenticated ? "bg-green-100" : "bg-red-100"}`}
         onClick={toggleMenu}
+        title={`Auth: ${isAuthenticated}, Role: ${user?.role || "none"}`}
       >
         <User className="w-5 h-5" />
       </Button>
