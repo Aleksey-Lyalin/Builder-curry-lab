@@ -492,8 +492,13 @@ const AccountPage = () => {
     { id: "profile", label: "Профиль", icon: User },
     { id: "orders", label: "Заказы", icon: Package },
     { id: "favorites", label: "Избранное", icon: Heart },
-    { id: "messages", label: "Сообще��ия", icon: MessageCircle },
+    { id: "messages", label: "Сообщения", icon: MessageCircle },
   ];
+
+  // Add admin panel for admin users
+  if (user?.role === "admin") {
+    tabs.push({ id: "admin", label: "Панель администратора", icon: Settings });
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -535,6 +540,21 @@ const AccountPage = () => {
                 <nav className="space-y-2">
                   {tabs.map((tab) => {
                     const Icon = tab.icon;
+
+                    // Special handling for admin panel tab
+                    if (tab.id === "admin") {
+                      return (
+                        <a
+                          key={tab.id}
+                          href="/admin"
+                          className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-orange-600 hover:bg-orange-50 border border-orange-200"
+                        >
+                          <Icon className="w-5 h-5" />
+                          {tab.label}
+                        </a>
+                      );
+                    }
+
                     return (
                       <a
                         key={tab.id}
