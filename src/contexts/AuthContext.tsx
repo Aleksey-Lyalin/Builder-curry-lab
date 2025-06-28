@@ -27,7 +27,7 @@ const mockUsers: User[] = [
     email: "alexey@example.com",
     avatar:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    role: "user",
+    role: "admin",
     createdAt: new Date("2024-01-15"),
     favorites: ["1", "3", "5"],
     unreadMessages: 2,

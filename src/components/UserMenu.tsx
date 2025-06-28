@@ -7,6 +7,7 @@ import {
   Heart,
   MessageCircle,
   LogOut,
+  Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
@@ -113,6 +114,18 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
                     </span>
                   )}
                 </Link>
+
+                {/* Admin Panel - Only show for admin users */}
+                {user.role === "admin" && (
+                  <Link
+                    to="/admin"
+                    className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Shield className="w-4 h-4" />
+                    Панель администратора
+                  </Link>
+                )}
               </div>
 
               {/* Logout */}
@@ -133,7 +146,7 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
                   <User className="w-6 h-6 text-gray-400" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">
-                  Добро пожа��овать!
+                  Добро пожаловать!
                 </h3>
                 <p className="text-sm text-gray-500 mb-4">
                   Войдите в аккаунт, чтобы делать покупки и отслеживать заказы
