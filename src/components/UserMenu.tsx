@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   User,
@@ -18,6 +18,7 @@ interface UserMenuProps {
 
 const UserMenu = ({ onLoginClick }: UserMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const { isAuthenticated, user, logout } = useAuth();
 
   const handleLogout = () => {
@@ -25,25 +26,44 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
     setIsOpen(false);
   };
 
+  const toggleMenu = () => {
+    if (!isAuthenticated) {
+      onLoginClick();
+    } else {
+      setIsOpen(!isOpen);
+    }
+  };
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <Button
         variant="ghost"
         size="icon"
         className="text-gray-600 hover:text-sage-600"
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
-        onClick={() => !isAuthenticated && onLoginClick()}
+        onClick={toggleMenu}
       >
         <User className="w-5 h-5" />
       </Button>
 
       {isOpen && (
-        <div
-          className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
-          onMouseEnter={() => setIsOpen(true)}
-          onMouseLeave={() => setIsOpen(false)}
-        >
+        <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
           {isAuthenticated && user ? (
             <div>
               {/* User Info */}
@@ -119,7 +139,7 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
                 {user.role === "admin" && (
                   <Link
                     to="/admin"
-                    className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="flex items-center gap-3 px-4 py-2 text-orange-600 hover:bg-orange-50 transition-colors border-t border-gray-100"
                     onClick={() => setIsOpen(false)}
                   >
                     <Shield className="w-4 h-4" />
@@ -165,7 +185,7 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
                   variant="outline"
                   className="w-full"
                 >
-                  Регистрация
+                  Ре��истрация
                 </Button>
               </div>
             </div>
