@@ -65,6 +65,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         if (user.createdAt && typeof user.createdAt === "string") {
           user.createdAt = new Date(user.createdAt);
         }
+
+        // Force update to admin role if user is Alexey (for testing)
+        if (user.id === "1" && user.role !== "admin") {
+          user.role = "admin";
+          localStorage.setItem("user", JSON.stringify(user));
+        }
+
         setAuthState({
           user,
           isLoading: false,
