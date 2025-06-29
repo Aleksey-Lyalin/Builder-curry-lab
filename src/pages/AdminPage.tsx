@@ -7,12 +7,553 @@ import {
   BarChart3,
   MessageCircle,
   Upload,
+  Plus,
+  Edit2,
+  Save,
+  X,
+  Camera,
+  Check,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useAuth } from "@/contexts/AuthContext";
 import { perfumes } from "@/data/perfumes";
 import { mockOrders } from "@/data/orders";
+
+interface ProductTableRow {
+  id: string;
+  article: string;
+  brand: string;
+  name: string;
+  fullName: string;
+  gender: string;
+  volume: string;
+  type: string;
+  productType: string;
+  price: number;
+  letualPrice: number;
+  rendewooPrice: number;
+  image: string;
+}
+
+const ProductsTable = () => {
+  const [products, setProducts] = useState<ProductTableRow[]>(
+    perfumes.map((p) => ({
+      id: p.id,
+      article: `ART-${p.id}`,
+      brand: p.brand,
+      name: p.name,
+      fullName: `${p.brand} ${p.name}`,
+      gender: p.gender,
+      volume: p.volumes[0]?.size || "50ml",
+      type: p.characteristics.fragranceGroup,
+      productType: p.characteristics.productType,
+      price: p.price,
+      letualPrice: Math.round(p.price * 1.1),
+      rendewooPrice: Math.round(p.price * 1.15),
+      image: p.image,
+    })),
+  );
+
+  const [editingCell, setEditingCell] = useState<{
+    row: number;
+    field: keyof ProductTableRow;
+  } | null>(null);
+  const [editValue, setEditValue] = useState("");
+  const [isAddingNew, setIsAddingNew] = useState(false);
+  const [newProduct, setNewProduct] = useState<Partial<ProductTableRow>>({});
+
+  const startEdit = (
+    rowIndex: number,
+    field: keyof ProductTableRow,
+    currentValue: string | number,
+  ) => {
+    setEditingCell({ row: rowIndex, field });
+    setEditValue(currentValue.toString());
+  };
+
+  const saveEdit = () => {
+    if (editingCell) {
+      const newProducts = [...products];
+      const { row, field } = editingCell;
+
+      if (
+        field === "price" ||
+        field === "letualPrice" ||
+        field === "rendewooPrice"
+      ) {
+        newProducts[row][field] = parseFloat(editValue) || 0;
+      } else {
+        (newProducts[row] as any)[field] = editValue;
+      }
+
+      setProducts(newProducts);
+      setEditingCell(null);
+      setEditValue("");
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditingCell(null);
+    setEditValue("");
+  };
+
+  const addNewProduct = () => {
+    const newId = Date.now().toString();
+    const product: ProductTableRow = {
+      id: newId,
+      article: newProduct.article || `ART-${newId}`,
+      brand: newProduct.brand || "",
+      name: newProduct.name || "",
+      fullName: newProduct.fullName || "",
+      gender: newProduct.gender || "унисекс",
+      volume: newProduct.volume || "50ml",
+      type: newProduct.type || "цветочные",
+      productType: newProduct.productType || "туалетная вода",
+      price: newProduct.price || 0,
+      letualPrice: newProduct.letualPrice || 0,
+      rendewooPrice: newProduct.rendewooPrice || 0,
+      image: newProduct.image || "",
+    };
+
+    setProducts([...products, product]);
+    setIsAddingNew(false);
+    setNewProduct({});
+  };
+
+  const handleImageUpload = (rowIndex: number, file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const newProducts = [...products];
+      newProducts[rowIndex].image = e.target?.result as string;
+      setProducts(newProducts);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const EditableCell = ({
+    value,
+    rowIndex,
+    field,
+    type = "text",
+  }: {
+    value: string | number;
+    rowIndex: number;
+    field: keyof ProductTableRow;
+    type?: string;
+  }) => {
+    const isEditing =
+      editingCell?.row === rowIndex && editingCell?.field === field;
+
+    return (
+      <div className="group relative">
+        {isEditing ? (
+          <div className="flex items-center gap-2">
+            <Input
+              value={editValue}
+              onChange={(e) => setEditValue(e.target.value)}
+              className="h-8 text-sm"
+              type={type}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") saveEdit();
+                if (e.key === "Escape") cancelEdit();
+              }}
+              autoFocus
+            />
+            <Button size="sm" onClick={saveEdit} className="h-8 w-8 p-0">
+              <Check className="w-3 h-3" />
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={cancelEdit}
+              className="h-8 w-8 p-0"
+            >
+              <X className="w-3 h-3" />
+            </Button>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between">
+            <span className="truncate">{value}</span>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6 p-0"
+              onClick={() => startEdit(rowIndex, field, value)}
+            >
+              <Edit2 className="w-3 h-3" />
+            </Button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const ImageCell = ({ src, rowIndex }: { src: string; rowIndex: number }) => (
+    <div className="flex items-center gap-2">
+      <img
+        src={src}
+        alt="Product"
+        className="w-10 h-10 object-cover rounded border"
+      />
+      <label className="cursor-pointer p-1 hover:bg-gray-100 rounded">
+        <Camera className="w-4 h-4" />
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) handleImageUpload(rowIndex, file);
+          }}
+        />
+      </label>
+    </div>
+  );
+
+  return (
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold text-gray-900">Товары</h2>
+        <div className="flex gap-3">
+          <Button
+            onClick={() => setIsAddingNew(true)}
+            className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            Добавить товар
+          </Button>
+          <Button variant="outline" className="flex items-center gap-2">
+            <Upload className="w-4 h-4" />
+            Загрузить CSV
+          </Button>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="border-b-2 border-gray-200 bg-gray-50">
+              <th className="text-left py-3 px-3 font-semibold">Изображение</th>
+              <th className="text-left py-3 px-3 font-semibold">Артикул</th>
+              <th className="text-left py-3 px-3 font-semibold">Бренд</th>
+              <th className="text-left py-3 px-3 font-semibold">Название</th>
+              <th className="text-left py-3 px-3 font-semibold">
+                Полное название
+              </th>
+              <th className="text-left py-3 px-3 font-semibold">Пол</th>
+              <th className="text-left py-3 px-3 font-semibold">Объем</th>
+              <th className="text-left py-3 px-3 font-semibold">Тип</th>
+              <th className="text-left py-3 px-3 font-semibold">
+                Тип продукта
+              </th>
+              <th className="text-left py-3 px-3 font-semibold">Цена</th>
+              <th className="text-left py-3 px-3 font-semibold">Letual цена</th>
+              <th className="text-left py-3 px-3 font-semibold">
+                Rendewoo цена
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product, index) => (
+              <tr
+                key={product.id}
+                className="border-b border-gray-100 hover:bg-gray-50"
+              >
+                <td className="py-3 px-3">
+                  <ImageCell src={product.image} rowIndex={index} />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={product.article}
+                    rowIndex={index}
+                    field="article"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={product.brand}
+                    rowIndex={index}
+                    field="brand"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={product.name}
+                    rowIndex={index}
+                    field="name"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={product.fullName}
+                    rowIndex={index}
+                    field="fullName"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={product.gender}
+                    rowIndex={index}
+                    field="gender"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={product.volume}
+                    rowIndex={index}
+                    field="volume"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={product.type}
+                    rowIndex={index}
+                    field="type"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={product.productType}
+                    rowIndex={index}
+                    field="productType"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={`${product.price} ₽`}
+                    rowIndex={index}
+                    field="price"
+                    type="number"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={`${product.letualPrice} ₽`}
+                    rowIndex={index}
+                    field="letualPrice"
+                    type="number"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <EditableCell
+                    value={`${product.rendewooPrice} ₽`}
+                    rowIndex={index}
+                    field="rendewooPrice"
+                    type="number"
+                  />
+                </td>
+              </tr>
+            ))}
+
+            {/* Add New Product Row */}
+            {isAddingNew && (
+              <tr className="border-b border-gray-100 bg-green-50">
+                <td className="py-3 px-3">
+                  <label className="cursor-pointer p-2 border-2 border-dashed border-green-300 rounded flex items-center justify-center">
+                    <Camera className="w-6 h-6 text-green-600" />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (e) => {
+                            setNewProduct((prev) => ({
+                              ...prev,
+                              image: e.target?.result as string,
+                            }));
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </td>
+                <td className="py-3 px-3">
+                  <Input
+                    placeholder="Артикул"
+                    value={newProduct.article || ""}
+                    onChange={(e) =>
+                      setNewProduct((prev) => ({
+                        ...prev,
+                        article: e.target.value,
+                      }))
+                    }
+                    className="h-8"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <Input
+                    placeholder="Бренд"
+                    value={newProduct.brand || ""}
+                    onChange={(e) =>
+                      setNewProduct((prev) => ({
+                        ...prev,
+                        brand: e.target.value,
+                      }))
+                    }
+                    className="h-8"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <Input
+                    placeholder="Название"
+                    value={newProduct.name || ""}
+                    onChange={(e) =>
+                      setNewProduct((prev) => ({
+                        ...prev,
+                        name: e.target.value,
+                      }))
+                    }
+                    className="h-8"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <Input
+                    placeholder="Полное название"
+                    value={newProduct.fullName || ""}
+                    onChange={(e) =>
+                      setNewProduct((prev) => ({
+                        ...prev,
+                        fullName: e.target.value,
+                      }))
+                    }
+                    className="h-8"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <Select
+                    onValueChange={(value) =>
+                      setNewProduct((prev) => ({ ...prev, gender: value }))
+                    }
+                  >
+                    <SelectTrigger className="h-8">
+                      <SelectValue placeholder="Пол" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="мужской">Мужской</SelectItem>
+                      <SelectItem value="женский">Женский</SelectItem>
+                      <SelectItem value="унисекс">Унисекс</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </td>
+                <td className="py-3 px-3">
+                  <Input
+                    placeholder="Объем"
+                    value={newProduct.volume || ""}
+                    onChange={(e) =>
+                      setNewProduct((prev) => ({
+                        ...prev,
+                        volume: e.target.value,
+                      }))
+                    }
+                    className="h-8"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <Input
+                    placeholder="Тип"
+                    value={newProduct.type || ""}
+                    onChange={(e) =>
+                      setNewProduct((prev) => ({
+                        ...prev,
+                        type: e.target.value,
+                      }))
+                    }
+                    className="h-8"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <Input
+                    placeholder="Тип продукта"
+                    value={newProduct.productType || ""}
+                    onChange={(e) =>
+                      setNewProduct((prev) => ({
+                        ...prev,
+                        productType: e.target.value,
+                      }))
+                    }
+                    className="h-8"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <Input
+                    type="number"
+                    placeholder="Цена"
+                    value={newProduct.price || ""}
+                    onChange={(e) =>
+                      setNewProduct((prev) => ({
+                        ...prev,
+                        price: parseFloat(e.target.value) || 0,
+                      }))
+                    }
+                    className="h-8"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <Input
+                    type="number"
+                    placeholder="Letual цена"
+                    value={newProduct.letualPrice || ""}
+                    onChange={(e) =>
+                      setNewProduct((prev) => ({
+                        ...prev,
+                        letualPrice: parseFloat(e.target.value) || 0,
+                      }))
+                    }
+                    className="h-8"
+                  />
+                </td>
+                <td className="py-3 px-3">
+                  <div className="flex gap-2">
+                    <Input
+                      type="number"
+                      placeholder="Rendewoo цена"
+                      value={newProduct.rendewooPrice || ""}
+                      onChange={(e) =>
+                        setNewProduct((prev) => ({
+                          ...prev,
+                          rendewooPrice: parseFloat(e.target.value) || 0,
+                        }))
+                      }
+                      className="h-8"
+                    />
+                    <Button size="sm" onClick={addNewProduct} className="h-8">
+                      <Save className="w-3 h-3" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        setIsAddingNew(false);
+                        setNewProduct({});
+                      }}
+                      className="h-8"
+                    >
+                      <X className="w-3 h-3" />
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState("products");
@@ -82,63 +623,7 @@ const AdminPage = () => {
             {/* Main Content */}
             <div className="lg:col-span-3">
               <div className="bg-white rounded-lg shadow">
-                {activeTab === "products" && (
-                  <div className="p-6">
-                    <div className="flex justify-between items-center mb-6">
-                      <h2 className="text-xl font-bold text-gray-900">
-                        Товары
-                      </h2>
-                      <button className="bg-sage-600 hover:bg-sage-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                        <Upload className="w-4 h-4" />
-                        Загрузить CSV
-                      </button>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead>
-                          <tr className="border-b border-gray-200">
-                            <th className="text-left py-3 px-2">Артикул</th>
-                            <th className="text-left py-3 px-2">Бренд</th>
-                            <th className="text-left py-3 px-2">Название</th>
-                            <th className="text-left py-3 px-2">Пол</th>
-                            <th className="text-left py-3 px-2">Объем</th>
-                            <th className="text-left py-3 px-2">Тип</th>
-                            <th className="text-left py-3 px-2">Цена</th>
-                            <th className="text-left py-3 px-2">Действия</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {perfumes.map((perfume) => (
-                            <tr
-                              key={perfume.id}
-                              className="border-b border-gray-100 hover:bg-gray-50"
-                            >
-                              <td className="py-3 px-2">{perfume.id}</td>
-                              <td className="py-3 px-2">{perfume.brand}</td>
-                              <td className="py-3 px-2">{perfume.name}</td>
-                              <td className="py-3 px-2">{perfume.gender}</td>
-                              <td className="py-3 px-2">
-                                {perfume.volumes[0]?.size}
-                              </td>
-                              <td className="py-3 px-2">
-                                {perfume.characteristics.productType}
-                              </td>
-                              <td className="py-3 px-2">
-                                {perfume.price.toLocaleString("ru-RU")} ₽
-                              </td>
-                              <td className="py-3 px-2">
-                                <button className="text-sage-600 hover:text-sage-700 text-sm">
-                                  Редактировать
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                )}
+                {activeTab === "products" && <ProductsTable />}
 
                 {activeTab === "users" && (
                   <div className="p-6">
