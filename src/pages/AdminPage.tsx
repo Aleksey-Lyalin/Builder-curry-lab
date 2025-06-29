@@ -559,14 +559,6 @@ const ProductsTable = () => {
 };
 
 
-                        style={{ backgroundColor: color }}
-                        title={color}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div className="mt-6 pt-6 border-t border-gray-200">
               <Button
@@ -741,7 +733,7 @@ const AdminPage = () => {
                 {activeTab === "reports" && (
                   <div className="p-6">
                     <h2 className="text-xl font-bold text-gray-900 mb-6">
-                      Отчеты и статистика
+                      От��еты и статистика
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       <div className="bg-sage-50 p-6 rounded-lg">
