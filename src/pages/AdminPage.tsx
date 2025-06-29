@@ -559,24 +559,6 @@ const ProductsTable = () => {
 };
 
 
-
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <Button
-                onClick={resetToDefault}
-                variant="outline"
-                className="w-full"
-              >
-                Сбросить к настройкам по умолчанию
-              </Button>
-            </div>
-          </div>
-
-          {/* Preset Colors */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Готовые цветовые схемы
-            </h3>
-            <div className="grid grid-cols-1 gap-3">
               {presetColors.map((preset, index) => (
                 <button
                   key={index}
