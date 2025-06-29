@@ -576,11 +576,18 @@ const InterfaceSettings = () => {
     }
   };
 
+  const handlePaletteColorSelect = (colorType: string, hexColor: string) => {
+    const r = parseInt(hexColor.slice(1, 3), 16);
+    const g = parseInt(hexColor.slice(3, 5), 16);
+    const b = parseInt(hexColor.slice(5, 7), 16);
+    updateColors({ [colorType]: `rgb(${r}, ${g}, ${b})` });
+  };
+
   return (
     <div className="p-6">
       <div className="flex items-center gap-3 mb-6">
         <Palette className="w-6 h-6 text-sage-600" />
-        <h2 className="text-xl font-bold text-gray-900">Настройки интерфейса</h2>
+        <h2 className="text-xl font-bold text-gray-900">Настр��йки интерфейса</h2>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8">
