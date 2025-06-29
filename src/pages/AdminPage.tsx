@@ -508,7 +508,7 @@ const ProductsTable = () => {
                 <td className="py-3 px-3">
                   <Input
                     type="number"
-                    placeholder="Letual ��ена"
+                    placeholder="Letual цена"
                     value={newProduct.letualPrice || ""}
                     onChange={(e) =>
                       setNewProduct((prev) => ({
@@ -707,7 +707,7 @@ const InterfaceSettings = () => {
         <div className="space-y-6">
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Цве��а кнопок
+              Цвета кнопок
             </h3>
 
             {/* Custom Color Pickers */}
@@ -939,7 +939,7 @@ const AdminPage = () => {
     { id: "products", label: "Тов��ры", icon: Package },
     { id: "users", label: "Пользов��тели", icon: Users },
     { id: "orders", label: "Заказы", icon: ShoppingBag },
-    { id: "messages", label: "��ообщения", icon: MessageCircle },
+    { id: "messages", label: "Сообщения", icon: MessageCircle },
     { id: "reports", label: "Отчеты", icon: BarChart3 },
     { id: "interface", label: "Настройки интерфейса", icon: Settings },
   ];
@@ -1084,12 +1084,79 @@ const AdminPage = () => {
 
                 {activeTab === "interface" && (
                   <div className="p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">
-                      Настройки интерфейса
-                    </h2>
-                    <p className="text-gray-600">
-                      Функционал настройки цветов в разработке.
-                    </p>
+                    <div className="flex items-center gap-3 mb-6">
+                      <Palette className="w-6 h-6 text-sage-600" />
+                      <h2 className="text-xl font-bold text-gray-900">Настройки интерфейса</h2>
+                    </div>
+
+                    <div className="grid lg:grid-cols-2 gap-8">
+                      <div className="bg-white rounded-lg border border-gray-200 p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Цвета кнопок</h3>
+
+                        <div className="space-y-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                              HEX код цвета (например: 8E929B)
+                            </label>
+                            <div className="flex gap-2">
+                              <span className="text-gray-500">#</span>
+                              <input
+                                type="text"
+                                placeholder="8E929B"
+                                className="flex-1 px-3 py-2 border border-gray-300 rounded-md"
+                                onChange={(e) => {
+                                  const hex = e.target.value.replace('#', '');
+                                  if (/^[0-9A-Fa-f]{6}$/.test(hex)) {
+                                    const r = parseInt(hex.slice(0, 2), 16);
+                                    const g = parseInt(hex.slice(2, 4), 16);
+                                    const b = parseInt(hex.slice(4, 6), 16);
+                                    const root = document.documentElement;
+                                    root.style.setProperty('--primary-button-bg', `rgb(${r}, ${g}, ${b})`);
+                                  }
+                                }}
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                              Палитра цветов
+                            </label>
+                            <div className="grid grid-cols-8 gap-2">
+                              {["#5C6F5C", "#8E929B", "#3B82F6", "#EF4444", "#10B981", "#F59E0B", "#8B5CF6", "#EC4899"].map((color, index) => (
+                                <button
+                                  key={index}
+                                  onClick={() => {
+                                    const r = parseInt(color.slice(1, 3), 16);
+                                    const g = parseInt(color.slice(3, 5), 16);
+                                    const b = parseInt(color.slice(5, 7), 16);
+                                    const root = document.documentElement;
+                                    root.style.setProperty('--primary-button-bg', `rgb(${r}, ${g}, ${b})`);
+                                  }}
+                                  className="w-8 h-8 rounded border-2 border-gray-200 hover:border-gray-400"
+                                  style={{ backgroundColor: color }}
+                                  title={color}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-white rounded-lg border border-gray-200 p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Предварительный просмотр</h3>
+                        <div className="space-y-4">
+                          <button className="px-6 py-3 rounded-lg font-medium bg-sage-600 text-white">
+                            Пример кнопки
+                          </button>
+                          <div className="text-sm text-gray-600">
+                            <p>• Введите HEX код без # (например: 8E929B)</p>
+                            <p>• Или выберите цвет из палитры</p>
+                            <p>• Изменения применяются сразу</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
