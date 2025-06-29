@@ -612,67 +612,169 @@ const InterfaceSettings = () => {
             </h3>
 
             {/* Custom Color Pickers */}
-            <div className="space-y-4">
+            <div className="space-y-6">
+              {/* Primary Color */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Основной цвет кнопок
                 </label>
-                <div className="flex items-center gap-3">
+
+                {/* Color Picker and RGB Input */}
+                <div className="flex items-center gap-3 mb-3">
                   <input
                     type="color"
                     value={rgbToHex(customColors.primary)}
-                    onChange={(e) =>
-                      handleColorChange("primary", hexToRgb(e.target.value))
-                    }
+                    onChange={(e) => handleColorChange('primary', hexToRgb(e.target.value))}
                     className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
                   />
                   <Input
                     value={customColors.primary}
-                    onChange={(e) =>
-                      handleColorChange("primary", e.target.value)
-                    }
+                    onChange={(e) => handleColorChange('primary', e.target.value)}
                     placeholder="rgb(92, 111, 92)"
                     className="flex-1"
                   />
                 </div>
+
+                {/* Hex Input */}
+                <div className="mb-3">
+                  <label className="block text-xs text-gray-500 mb-1">
+                    Или введите HEX код (например: 8E929B):
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500">#</span>
+                    <Input
+                      placeholder="8E929B"
+                      className="flex-1"
+                      onChange={(e) => handleHexInputChange('primary', e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                {/* Color Palette */}
+                <div>
+                  <label className="block text-xs text-gray-500 mb-2">
+                    Выберите из палитры:
+                  </label>
+                  <div className="grid grid-cols-8 gap-2">
+                    {colorPalette.map((color, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handlePaletteColorSelect('primary', color)}
+                        className="w-8 h-8 rounded border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                        style={{ backgroundColor: color }}
+                        title={color}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
 
+              {/* Hover Color */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Цвет при наведении
                 </label>
-                <div className="flex items-center gap-3">
+
+                <div className="flex items-center gap-3 mb-3">
                   <input
                     type="color"
                     value={rgbToHex(customColors.primaryHover)}
-                    onChange={(e) =>
-                      handleColorChange(
-                        "primaryHover",
-                        hexToRgb(e.target.value),
-                      )
-                    }
+                    onChange={(e) => handleColorChange('primaryHover', hexToRgb(e.target.value))}
                     className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
                   />
                   <Input
                     value={customColors.primaryHover}
-                    onChange={(e) =>
-                      handleColorChange("primaryHover", e.target.value)
-                    }
+                    onChange={(e) => handleColorChange('primaryHover', e.target.value)}
                     placeholder="rgb(72, 88, 72)"
                     className="flex-1"
                   />
                 </div>
+
+                <div className="mb-3">
+                  <label className="block text-xs text-gray-500 mb-1">
+                    Или введите HEX код:
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500">#</span>
+                    <Input
+                      placeholder="6B7280"
+                      className="flex-1"
+                      onChange={(e) => handleHexInputChange('primaryHover', e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs text-gray-500 mb-2">
+                    Выберите из палитры:
+                  </label>
+                  <div className="grid grid-cols-8 gap-2">
+                    {colorPalette.map((color, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handlePaletteColorSelect('primaryHover', color)}
+                        className="w-8 h-8 rounded border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                        style={{ backgroundColor: color }}
+                        title={color}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
 
+              {/* Text Color */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Цвет текста кнопок
                 </label>
-                <div className="flex items-center gap-3">
+
+                <div className="flex items-center gap-3 mb-3">
                   <input
                     type="color"
                     value={rgbToHex(customColors.primaryText)}
-                    onChange={(e) =>
+                    onChange={(e) => handleColorChange('primaryText', hexToRgb(e.target.value))}
+                    className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
+                  />
+                  <Input
+                    value={customColors.primaryText}
+                    onChange={(e) => handleColorChange('primaryText', e.target.value)}
+                    placeholder="rgb(255, 255, 255)"
+                    className="flex-1"
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="block text-xs text-gray-500 mb-1">
+                    Или введите HEX код:
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500">#</span>
+                    <Input
+                      placeholder="FFFFFF"
+                      className="flex-1"
+                      onChange={(e) => handleHexInputChange('primaryText', e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs text-gray-500 mb-2">
+                    Выберите из палитры:
+                  </label>
+                  <div className="grid grid-cols-8 gap-2">
+                    {colorPalette.map((color, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handlePaletteColorSelect('primaryText', color)}
+                        className="w-8 h-8 rounded border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                        style={{ backgroundColor: color }}
+                        title={color}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
                       handleColorChange("primaryText", hexToRgb(e.target.value))
                     }
                     className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
@@ -827,12 +929,16 @@ const InterfaceSettings = () => {
 
           {/* Information */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-semibold text-blue-900 mb-2">ℹ️ Информация</h4>
+            <h4 className="font-semibold text-blue-900 mb-2">
+              ℹ️ Информация
+            </h4>
             <ul className="text-sm text-blue-800 space-y-1">
               <li>• Изменения применяются ко всем кнопкам сайта</li>
               <li>• Настройки сохраняются в браузере</li>
-              <li>• Можно использовать RGB или HEX значения</li>
+              <li>• Можно использовать RGB, HEX значения или палитру</li>
+              <li>• HEX формат: без # (например: 8E929B для светло-серого)</li>
               <li>• Изменения видны сразу после применения</li>
+              <li>• Клик по цвету в палитре мгновенно применяет его</li>
             </ul>
           </div>
         </div>

@@ -29,6 +29,14 @@ const presetColors = [
     },
   },
   {
+    name: "Light Gray",
+    colors: {
+      primary: "rgb(142, 146, 155)", // 8E929B
+      primaryHover: "rgb(107, 114, 128)",
+      primaryText: "rgb(255, 255, 255)",
+    },
+  },
+  {
     name: "Ocean Blue",
     colors: {
       primary: "rgb(59, 130, 246)",
