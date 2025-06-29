@@ -254,7 +254,7 @@ const ProductsTable = () => {
                 Полное название
               </th>
               <th className="text-left py-3 px-3 font-semibold">Пол</th>
-              <th className="text-left py-3 px-3 font-semibold">Объем</th>
+              <th className="text-left py-3 px-3 font-semibold">��бъем</th>
               <th className="text-left py-3 px-3 font-semibold">Тип</th>
               <th className="text-left py-3 px-3 font-semibold">
                 Тип продукта
@@ -816,14 +816,14 @@ const InterfaceSettings = () => {
                 >
                   <span className="font-medium text-gray-900">
                     {preset.name}
-                  </span>
-                  <div className="flex gap-2">
-                    <div
-                      className="w-6 h-6 rounded border"
-                      style={{ backgroundColor: preset.colors.primary }}
-                    />
-                    <div
-                      className="w-6 h-6 rounded border"
+                  <input
+                    type="color"
+                    value={rgbToHex(customColors.primaryText)}
+                    onChange={(e) =>
+                      handleColorChange("primaryText", hexToRgb(e.target.value))
+                    }
+                    className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
+                  />
                       style={{ backgroundColor: preset.colors.primaryHover }}
                     />
                   </div>
