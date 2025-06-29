@@ -18,20 +18,12 @@ const Header = () => {
       <header className="bg-white border-b border-gray-200 px-4 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-            <div className="w-10 h-10 bg-sage-500 rounded-lg flex items-center justify-center">
-              <div className="w-6 h-6 bg-white rounded-sm flex items-center justify-center">
-                <div className="w-3 h-3 bg-sage-500 rounded-full"></div>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <h1 className="text-lg font-semibold text-gray-800 leading-tight">
-                LITTLE DAISY
-              </h1>
-              <span className="text-xs text-gray-500 leading-tight">
-                PERFUME SHOP
-              </span>
-            </div>
+          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F42ef96d0429245c4b9208336c6d953e6%2F144af381c3ac43cbaed00a2ab2fb7ab7?format=webp&width=800"
+              alt="Little Daisy Perfume Shop"
+              className="h-12 w-auto object-contain"
+            />
           </Link>
 
           {/* Search Bar */}
