@@ -807,10 +807,13 @@ const InterfaceSettings = () => {
                     onChange={(e) =>
                       handleColorChange("primaryText", hexToRgb(e.target.value))
                     }
-                    className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
+                    className="w-6 h-6 rounded border"
+                    style={{ backgroundColor: preset.colors.primary }}
                   />
-                      style={{ backgroundColor: preset.colors.primaryHover }}
-                    />
+                  <div
+                    className="w-6 h-6 rounded border"
+                    style={{ backgroundColor: preset.colors.primaryHover }}
+                  />
                   </div>
                 </button>
               ))}
