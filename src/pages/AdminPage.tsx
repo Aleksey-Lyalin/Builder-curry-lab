@@ -560,6 +560,98 @@ const ProductsTable = () => {
 
 const InterfaceSettings = () => {
   const { colors, updateColors, resetToDefault, presetColors } = useTheme();
+
+  const colorPalette = [
+    "#5C6F5C", "#8E929B", "#3B82F6", "#EF4444",
+    "#10B981", "#F59E0B", "#8B5CF6", "#EC4899"
+  ];
+
+  const handleHexInput = (colorType: string, hex: string) => {
+    const cleanHex = hex.replace('#', '');
+    if (/^[0-9A-Fa-f]{6}$/.test(cleanHex)) {
+      const r = parseInt(cleanHex.slice(0, 2), 16);
+      const g = parseInt(cleanHex.slice(2, 4), 16);
+      const b = parseInt(cleanHex.slice(4, 6), 16);
+      updateColors({ [colorType]: `rgb(${r}, ${g}, ${b})` });
+    }
+  };
+
+  return (
+    <div className="p-6">
+      <div className="flex items-center gap-3 mb-6">
+        <Palette className="w-6 h-6 text-sage-600" />
+        <h2 className="text-xl font-bold text-gray-900">Настройки интерфейса</h2>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-8">
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Цвета кнопок</h3>
+
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Основной цвет (HEX код, например: 8E929B)
+              </label>
+              <div className="flex gap-2">
+                <span className="text-gray-500">#</span>
+                <Input
+                  placeholder="8E929B"
+                  onChange={(e) => handleHexInput('primary', e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Цвет палитры
+              </label>
+              <div className="grid grid-cols-8 gap-2">
+                {colorPalette.map((color, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      const r = parseInt(color.slice(1, 3), 16);
+                      const g = parseInt(color.slice(3, 5), 16);
+                      const b = parseInt(color.slice(5, 7), 16);
+                      updateColors({ primary: `rgb(${r}, ${g}, ${b})` });
+                    }}
+                    className="w-8 h-8 rounded border-2 border-gray-200 hover:border-gray-400"
+                    style={{ backgroundColor: color }}
+                    title={color}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-4">
+              <Button onClick={resetToDefault} variant="outline" className="w-full">
+                Сбросить к настройкам по умолчанию
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Предварительный просмотр</h3>
+          <div className="space-y-4">
+            <button
+              className="px-6 py-3 rounded-lg font-medium"
+              style={{ backgroundColor: colors.primary, color: colors.primaryText }}
+            >
+              Пример кнопки
+            </button>
+            <div className="text-sm text-gray-600">
+              <p>• Введите HEX код без # (например: 8E929B)</p>
+              <p>• Или выберите цвет из палитры</p>
+              <p>• Изменения применяются сразу</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+  const { colors, updateColors, resetToDefault, presetColors } = useTheme();
   const [customColors, setCustomColors] = useState({
     primary: colors.primary,
     primaryHover: colors.primaryHover,
@@ -599,7 +691,7 @@ const InterfaceSettings = () => {
       <div className="flex items-center gap-3 mb-6">
         <Palette className="w-6 h-6 text-sage-600" />
         <h2 className="text-xl font-bold text-gray-900">
-          Настройки интерфейса
+          Нас��ройки интерфейса
         </h2>
       </div>
 
@@ -968,7 +1060,7 @@ const AdminPage = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">
-              Панель администратора
+              ��анель администратора
             </h1>
             <p className="text-gray-600 mt-2">
               Управление м��газином и контентом
