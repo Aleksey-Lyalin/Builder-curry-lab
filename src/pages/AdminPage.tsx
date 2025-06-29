@@ -904,120 +904,7 @@ const InterfaceSettings = () => {
                   />
                   <div
                     className="w-6 h-6 rounded border"
-                    style={{ backgroundColor: preset.colors.primaryHover }}
-                  />
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
 
-        {/* Preview */}
-        <div className="space-y-6">
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Предварительный просмотр
-            </h3>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Основные кнопки
-                </label>
-                <div className="space-y-3">
-                  <button
-                    className="px-6 py-3 rounded-lg font-medium transition-colors"
-                    style={{
-                      backgroundColor: customColors.primary,
-                      color: customColors.primaryText,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        customColors.primaryHover;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        customColors.primary;
-                    }}
-                  >
-                    В корзину
-                  </button>
-                  <button
-                    className="px-6 py-3 rounded-lg font-medium transition-colors ml-3"
-                    style={{
-                      backgroundColor: customColors.primary,
-                      color: customColors.primaryText,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        customColors.primaryHover;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        customColors.primary;
-                    }}
-                  >
-                    Оформить зак��з
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Маленькие кнопки
-                </label>
-                <div className="space-y-3">
-                  <button
-                    className="px-4 py-2 rounded text-sm font-medium transition-colors"
-                    style={{
-                      backgroundColor: customColors.primary,
-                      color: customColors.primaryText,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        customColors.primaryHover;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        customColors.primary;
-                    }}
-                  >
-                    Сохранить
-                  </button>
-                  <button
-                    className="px-4 py-2 rounded text-sm font-medium transition-colors ml-3"
-                    style={{
-                      backgroundColor: customColors.primary,
-                      color: customColors.primaryText,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        customColors.primaryHover;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor =
-                        customColors.primary;
-                    }}
-                  >
-                    Добавить
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Information */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-semibold text-blue-900 mb-2">
-              ℹ️ Информация
-            </h4>
-            <ul className="text-sm text-blue-800 space-y-1">
-              <li>• Изменения применяются ко всем кнопкам сайта</li>
-              <li>• Настройки сохраняются в браузере</li>
-              <li>• Можно использовать RGB, HEX значения или палитру</li>
-              <li>• HEX формат: без # (например: 8E929B для светло-серого)</li>
-              <li>• Изменения видны сразу после применения</li>
               <li>• Клик по цвету в палитре мгновенно применяет его</li>
             </ul>
           </div>
@@ -1045,7 +932,7 @@ const AdminPage = () => {
 
   const tabs = [
     { id: "products", label: "Тов��ры", icon: Package },
-    { id: "users", label: "Пользователи", icon: Users },
+    { id: "users", label: "Пользов��тели", icon: Users },
     { id: "orders", label: "Заказы", icon: ShoppingBag },
     { id: "messages", label: "Сообщения", icon: MessageCircle },
     { id: "reports", label: "Отчеты", icon: BarChart3 },
