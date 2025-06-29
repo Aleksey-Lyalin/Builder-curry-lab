@@ -904,9 +904,10 @@ const InterfaceSettings = () => {
                   />
                   <div
                     className="w-6 h-6 rounded border"
-
-              <li>• Клик по цвету в палитре мгновенно применяет его</li>
-            </ul>
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
