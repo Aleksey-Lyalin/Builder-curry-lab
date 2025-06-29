@@ -254,7 +254,7 @@ const ProductsTable = () => {
                 Полное название
               </th>
               <th className="text-left py-3 px-3 font-semibold">Пол</th>
-              <th className="text-left py-3 px-3 font-semibold">��бъем</th>
+              <th className="text-left py-3 px-3 font-semibold">Объем</th>
               <th className="text-left py-3 px-3 font-semibold">Тип</th>
               <th className="text-left py-3 px-3 font-semibold">
                 Тип продукта
@@ -480,7 +480,7 @@ const ProductsTable = () => {
                 </td>
                 <td className="py-3 px-3">
                   <Input
-                    placeholder="Тип продук��а"
+                    placeholder="Тип продукта"
                     value={newProduct.productType || ""}
                     onChange={(e) =>
                       setNewProduct((prev) => ({
@@ -558,34 +558,6 @@ const ProductsTable = () => {
   );
 };
 
-
-              {presetColors.map((preset, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePresetSelect(preset)}
-                  className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <span className="font-medium text-gray-900">
-                    {preset.name}
-                  <input
-                    type="color"
-                    value={rgbToHex(customColors.primaryText)}
-                    onChange={(e) =>
-                      handleColorChange("primaryText", hexToRgb(e.target.value))
-                    }
-                    className="w-6 h-6 rounded border"
-                    style={{ backgroundColor: colors.primary }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState("products");
   const { isAuthenticated, user, isLoading } = useAuth();
@@ -603,10 +575,10 @@ const AdminPage = () => {
   }
 
   const tabs = [
-    { id: "products", label: "Тов��ры", icon: Package },
-    { id: "users", label: "Пол��зов��тели", icon: Users },
+    { id: "products", label: "Товары", icon: Package },
+    { id: "users", label: "Пользователи", icon: Users },
     { id: "orders", label: "Заказы", icon: ShoppingBag },
-    { id: "messages", label: "С��общения", icon: MessageCircle },
+    { id: "messages", label: "Сообщения", icon: MessageCircle },
     { id: "reports", label: "Отчеты", icon: BarChart3 },
     { id: "interface", label: "Настройки интерфейса", icon: Settings },
   ];
@@ -619,10 +591,10 @@ const AdminPage = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">
-              ��анель администратора
+              Панель администратора
             </h1>
             <p className="text-gray-600 mt-2">
-              Управление м��газином и контентом
+              Управление магазином и контентом
             </p>
           </div>
 
@@ -715,7 +687,7 @@ const AdminPage = () => {
                 {activeTab === "reports" && (
                   <div className="p-6">
                     <h2 className="text-xl font-bold text-gray-900 mb-6">
-                      От��еты и статистика
+                      Отчеты и статистика
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       <div className="bg-sage-50 p-6 rounded-lg">
@@ -753,12 +725,16 @@ const AdminPage = () => {
                   <div className="p-6">
                     <div className="flex items-center gap-3 mb-6">
                       <Palette className="w-6 h-6 text-sage-600" />
-                      <h2 className="text-xl font-bold text-gray-900">Настройки интерфейса</h2>
+                      <h2 className="text-xl font-bold text-gray-900">
+                        Настройки интерфейса
+                      </h2>
                     </div>
 
                     <div className="grid lg:grid-cols-2 gap-8">
                       <div className="bg-white rounded-lg border border-gray-200 p-6">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Цвета кнопок</h3>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                          Цвета кнопок
+                        </h3>
 
                         <div className="space-y-4">
                           <div>
@@ -772,13 +748,16 @@ const AdminPage = () => {
                                 placeholder="8E929B"
                                 className="flex-1 px-3 py-2 border border-gray-300 rounded-md"
                                 onChange={(e) => {
-                                  const hex = e.target.value.replace('#', '');
+                                  const hex = e.target.value.replace("#", "");
                                   if (/^[0-9A-Fa-f]{6}$/.test(hex)) {
                                     const r = parseInt(hex.slice(0, 2), 16);
                                     const g = parseInt(hex.slice(2, 4), 16);
                                     const b = parseInt(hex.slice(4, 6), 16);
                                     const root = document.documentElement;
-                                    root.style.setProperty('--primary-button-bg', `rgb(${r}, ${g}, ${b})`);
+                                    root.style.setProperty(
+                                      "--primary-button-bg",
+                                      `rgb(${r}, ${g}, ${b})`,
+                                    );
                                   }
                                 }}
                               />
@@ -790,7 +769,16 @@ const AdminPage = () => {
                               Палитра цветов
                             </label>
                             <div className="grid grid-cols-8 gap-2">
-                              {["#5C6F5C", "#8E929B", "#3B82F6", "#EF4444", "#10B981", "#F59E0B", "#8B5CF6", "#EC4899"].map((color, index) => (
+                              {[
+                                "#5C6F5C",
+                                "#8E929B",
+                                "#3B82F6",
+                                "#EF4444",
+                                "#10B981",
+                                "#F59E0B",
+                                "#8B5CF6",
+                                "#EC4899",
+                              ].map((color, index) => (
                                 <button
                                   key={index}
                                   onClick={() => {
@@ -798,7 +786,10 @@ const AdminPage = () => {
                                     const g = parseInt(color.slice(3, 5), 16);
                                     const b = parseInt(color.slice(5, 7), 16);
                                     const root = document.documentElement;
-                                    root.style.setProperty('--primary-button-bg', `rgb(${r}, ${g}, ${b})`);
+                                    root.style.setProperty(
+                                      "--primary-button-bg",
+                                      `rgb(${r}, ${g}, ${b})`,
+                                    );
                                   }}
                                   className="w-8 h-8 rounded border-2 border-gray-200 hover:border-gray-400"
                                   style={{ backgroundColor: color }}
@@ -811,7 +802,9 @@ const AdminPage = () => {
                       </div>
 
                       <div className="bg-white rounded-lg border border-gray-200 p-6">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Предварительный просмотр</h3>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                          Предварительный просмотр
+                        </h3>
                         <div className="space-y-4">
                           <button className="px-6 py-3 rounded-lg font-medium bg-sage-600 text-white">
                             Пример кнопки
