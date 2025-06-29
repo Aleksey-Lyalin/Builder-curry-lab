@@ -1077,7 +1077,16 @@ const AdminPage = () => {
                   </div>
                 )}
 
-                {activeTab === "interface" && <InterfaceSettings />}
+                {activeTab === "interface" && (
+                  <div className="p-6">
+                    <h2 className="text-xl font-bold text-gray-900 mb-6">
+                      Настройки интерфейса
+                    </h2>
+                    <p className="text-gray-600">
+                      Функционал настройки цветов в разработке.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
