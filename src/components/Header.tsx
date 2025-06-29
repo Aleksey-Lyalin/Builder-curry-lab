@@ -35,13 +35,13 @@ const Header = () => {
           </Link>
 
           {/* Search Bar */}
-          <div className="flex-1 max-w-md mx-4">
+          <div className="flex-1 max-w-2xl mx-6">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
                 type="text"
                 placeholder="Поиск"
-                className="pl-10 pr-4 py-2 w-full border-gray-300 focus:border-sage-500 focus:ring-sage-500"
+                className="pl-12 pr-6 py-3 w-full h-12 text-base border-gray-300 focus:border-sage-500 focus:ring-sage-500"
               />
             </div>
           </div>
@@ -59,7 +59,7 @@ const Header = () => {
                   size="icon"
                   className="text-gray-600 hover:text-sage-600 relative"
                 >
-                  <MessageCircle className="w-5 h-5" />
+                  <MessageCircle className="w-6 h-6" />
                   {user && user.unreadMessages > 0 && (
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {user.unreadMessages > 9 ? "9+" : user.unreadMessages}
@@ -82,7 +82,7 @@ const Header = () => {
                   }
                 }}
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-6 h-6" />
                 {isAuthenticated && user && user.favorites.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-sage-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {user.favorites.length > 9 ? "9+" : user.favorites.length}
@@ -98,7 +98,7 @@ const Header = () => {
                 size="icon"
                 className="text-gray-600 hover:text-sage-600 relative"
               >
-                <ShoppingCart className="w-5 h-5" />
+                <ShoppingCart className="w-6 h-6" />
                 {totalItems > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
                     {totalItems > 99 ? "99+" : totalItems}
