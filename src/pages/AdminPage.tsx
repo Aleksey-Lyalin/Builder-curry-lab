@@ -508,7 +508,7 @@ const ProductsTable = () => {
                 <td className="py-3 px-3">
                   <Input
                     type="number"
-                    placeholder="Letual цена"
+                    placeholder="Letual ��ена"
                     value={newProduct.letualPrice || ""}
                     onChange={(e) =>
                       setNewProduct((prev) => ({
@@ -707,7 +707,7 @@ const InterfaceSettings = () => {
         <div className="space-y-6">
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Цвета кнопок
+              Цве��а кнопок
             </h3>
 
             {/* Custom Color Pickers */}
@@ -907,10 +907,7 @@ const InterfaceSettings = () => {
                       handleColorChange("primaryText", hexToRgb(e.target.value))
                     }
                     className="w-6 h-6 rounded border"
-                    style={{ backgroundColor: preset.colors.primary }}
-                  />
-                  <div
-                    className="w-6 h-6 rounded border"
+                    style={{ backgroundColor: colors.primary }}
                   />
                 </div>
               </div>
@@ -942,7 +939,7 @@ const AdminPage = () => {
     { id: "products", label: "Тов��ры", icon: Package },
     { id: "users", label: "Пользов��тели", icon: Users },
     { id: "orders", label: "Заказы", icon: ShoppingBag },
-    { id: "messages", label: "Сообщения", icon: MessageCircle },
+    { id: "messages", label: "��ообщения", icon: MessageCircle },
     { id: "reports", label: "Отчеты", icon: BarChart3 },
     { id: "interface", label: "Настройки интерфейса", icon: Settings },
   ];
