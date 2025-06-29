@@ -12,6 +12,11 @@
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
+    /* Dynamic button colors */
+    --primary-button-bg: rgb(92, 111, 92);
+    --primary-button-hover: rgb(72, 88, 72);
+    --primary-button-text: rgb(255, 255, 255);
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
@@ -111,5 +116,24 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    background-color: var(--primary-button-bg) !important;
+    color: var(--primary-button-text) !important;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-button-hover) !important;
+  }
+
+  .bg-sage-600 {
+    background-color: var(--primary-button-bg) !important;
+  }
+
+  .hover\:bg-sage-700:hover {
+    background-color: var(--primary-button-hover) !important;
   }
 }

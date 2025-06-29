@@ -13,6 +13,8 @@ import {
   X,
   Camera,
   Check,
+  Settings,
+  Palette,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -26,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import { perfumes } from "@/data/perfumes";
 import { mockOrders } from "@/data/orders";
 
@@ -477,7 +480,7 @@ const ProductsTable = () => {
                 </td>
                 <td className="py-3 px-3">
                   <Input
-                    placeholder="Тип продукта"
+                    placeholder="Тип продук��а"
                     value={newProduct.productType || ""}
                     onChange={(e) =>
                       setNewProduct((prev) => ({
@@ -555,6 +558,289 @@ const ProductsTable = () => {
   );
 };
 
+const InterfaceSettings = () => {
+  const { colors, updateColors, resetToDefault, presetColors } = useTheme();
+  const [customColors, setCustomColors] = useState({
+    primary: colors.primary,
+    primaryHover: colors.primaryHover,
+    primaryText: colors.primaryText,
+  });
+
+  const handleColorChange = (
+    colorType: keyof typeof customColors,
+    value: string,
+  ) => {
+    const newColors = { ...customColors, [colorType]: value };
+    setCustomColors(newColors);
+    updateColors({ [colorType]: value });
+  };
+
+  const handlePresetSelect = (preset: (typeof presetColors)[0]) => {
+    setCustomColors(preset.colors);
+    updateColors(preset.colors);
+  };
+
+  const rgbToHex = (rgb: string): string => {
+    const matches = rgb.match(/\d+/g);
+    if (!matches) return "#000000";
+    const [r, g, b] = matches.map(Number);
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+  };
+
+  const hexToRgb = (hex: string): string => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
+  return (
+    <div className="p-6">
+      <div className="flex items-center gap-3 mb-6">
+        <Palette className="w-6 h-6 text-sage-600" />
+        <h2 className="text-xl font-bold text-gray-900">
+          Настройки интерфейса
+        </h2>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Color Customization */}
+        <div className="space-y-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Цвета кнопок
+            </h3>
+
+            {/* Custom Color Pickers */}
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Основной цвет кнопок
+                </label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="color"
+                    value={rgbToHex(customColors.primary)}
+                    onChange={(e) =>
+                      handleColorChange("primary", hexToRgb(e.target.value))
+                    }
+                    className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
+                  />
+                  <Input
+                    value={customColors.primary}
+                    onChange={(e) =>
+                      handleColorChange("primary", e.target.value)
+                    }
+                    placeholder="rgb(92, 111, 92)"
+                    className="flex-1"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Цвет при наведении
+                </label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="color"
+                    value={rgbToHex(customColors.primaryHover)}
+                    onChange={(e) =>
+                      handleColorChange(
+                        "primaryHover",
+                        hexToRgb(e.target.value),
+                      )
+                    }
+                    className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
+                  />
+                  <Input
+                    value={customColors.primaryHover}
+                    onChange={(e) =>
+                      handleColorChange("primaryHover", e.target.value)
+                    }
+                    placeholder="rgb(72, 88, 72)"
+                    className="flex-1"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Цвет текста кнопок
+                </label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="color"
+                    value={rgbToHex(customColors.primaryText)}
+                    onChange={(e) =>
+                      handleColorChange("primaryText", hexToRgb(e.target.value))
+                    }
+                    className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
+                  />
+                  <Input
+                    value={customColors.primaryText}
+                    onChange={(e) =>
+                      handleColorChange("primaryText", e.target.value)
+                    }
+                    placeholder="rgb(255, 255, 255)"
+                    className="flex-1"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <Button
+                onClick={resetToDefault}
+                variant="outline"
+                className="w-full"
+              >
+                Сбросить к настройкам по умолчанию
+              </Button>
+            </div>
+          </div>
+
+          {/* Preset Colors */}
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Готовые цветовые схемы
+            </h3>
+            <div className="grid grid-cols-1 gap-3">
+              {presetColors.map((preset, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePresetSelect(preset)}
+                  className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-medium text-gray-900">
+                    {preset.name}
+                  </span>
+                  <div className="flex gap-2">
+                    <div
+                      className="w-6 h-6 rounded border"
+                      style={{ backgroundColor: preset.colors.primary }}
+                    />
+                    <div
+                      className="w-6 h-6 rounded border"
+                      style={{ backgroundColor: preset.colors.primaryHover }}
+                    />
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Preview */}
+        <div className="space-y-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Предварительный просмотр
+            </h3>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Основные кнопки
+                </label>
+                <div className="space-y-3">
+                  <button
+                    className="px-6 py-3 rounded-lg font-medium transition-colors"
+                    style={{
+                      backgroundColor: customColors.primary,
+                      color: customColors.primaryText,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        customColors.primaryHover;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        customColors.primary;
+                    }}
+                  >
+                    В корзину
+                  </button>
+                  <button
+                    className="px-6 py-3 rounded-lg font-medium transition-colors ml-3"
+                    style={{
+                      backgroundColor: customColors.primary,
+                      color: customColors.primaryText,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        customColors.primaryHover;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        customColors.primary;
+                    }}
+                  >
+                    Оформить заказ
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Маленькие кнопки
+                </label>
+                <div className="space-y-3">
+                  <button
+                    className="px-4 py-2 rounded text-sm font-medium transition-colors"
+                    style={{
+                      backgroundColor: customColors.primary,
+                      color: customColors.primaryText,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        customColors.primaryHover;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        customColors.primary;
+                    }}
+                  >
+                    Сохранить
+                  </button>
+                  <button
+                    className="px-4 py-2 rounded text-sm font-medium transition-colors ml-3"
+                    style={{
+                      backgroundColor: customColors.primary,
+                      color: customColors.primaryText,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        customColors.primaryHover;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        customColors.primary;
+                    }}
+                  >
+                    Добавить
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Information */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h4 className="font-semibold text-blue-900 mb-2">ℹ️ Информация</h4>
+            <ul className="text-sm text-blue-800 space-y-1">
+              <li>• Изменения применяются ко всем кнопкам сайта</li>
+              <li>• Настройки сохраняются в браузере</li>
+              <li>• Можно использовать RGB или HEX значения</li>
+              <li>• Изменения видны сразу после применения</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState("products");
   const { isAuthenticated, user, isLoading } = useAuth();
@@ -572,11 +858,12 @@ const AdminPage = () => {
   }
 
   const tabs = [
-    { id: "products", label: "Товары", icon: Package },
+    { id: "products", label: "Тов��ры", icon: Package },
     { id: "users", label: "Пользователи", icon: Users },
     { id: "orders", label: "Заказы", icon: ShoppingBag },
     { id: "messages", label: "Сообщения", icon: MessageCircle },
     { id: "reports", label: "Отчеты", icon: BarChart3 },
+    { id: "interface", label: "Настройки интерфейса", icon: Settings },
   ];
 
   return (
@@ -716,6 +1003,8 @@ const AdminPage = () => {
                     </div>
                   </div>
                 )}
+
+                {activeTab === "interface" && <InterfaceSettings />}
               </div>
             </div>
           </div>
