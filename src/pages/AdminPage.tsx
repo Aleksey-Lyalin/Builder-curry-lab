@@ -775,18 +775,6 @@ const InterfaceSettings = () => {
                 </div>
               </div>
             </div>
-                      handleColorChange("primaryText", hexToRgb(e.target.value))
-                    }
-                    className="w-12 h-12 border border-gray-300 rounded cursor-pointer"
-                  />
-                  <Input
-                    value={customColors.primaryText}
-                    onChange={(e) =>
-                      handleColorChange("primaryText", e.target.value)
-                    }
-                    placeholder="rgb(255, 255, 255)"
-                    className="flex-1"
-                  />
                 </div>
               </div>
             </div>
@@ -878,7 +866,7 @@ const InterfaceSettings = () => {
                         customColors.primary;
                     }}
                   >
-                    Оформить заказ
+                    Оформить зак��з
                   </button>
                 </div>
               </div>
