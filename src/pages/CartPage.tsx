@@ -192,9 +192,11 @@ const CartPage = () => {
                   </div>
                 </div>
 
-                <Button className="w-full bg-sage-600 hover:bg-sage-700 text-white py-3 text-lg font-semibold mb-4">
-                  Оформить заказ
-                </Button>
+                <Link to="/checkout">
+                  <Button className="w-full bg-sage-600 hover:bg-sage-700 text-white py-3 text-lg font-semibold mb-4">
+                    Оформить заказ
+                  </Button>
+                </Link>
 
                 <div className="text-xs text-gray-500 space-y-2">
                   <p>✓ Бесплатная доставка от 3000 ₽</p>
