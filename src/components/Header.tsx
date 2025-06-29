@@ -4,12 +4,14 @@ import { Search, ShoppingCart, Heart, MessageCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
 import UserMenu from "./UserMenu";
 import AuthModal from "./AuthModal";
 
 const Header = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { isAuthenticated, user } = useAuth();
+  const { totalItems } = useCart();
 
   return (
     <>
@@ -90,14 +92,20 @@ const Header = () => {
             </Link>
 
             {/* Shopping Cart */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-gray-600 hover:text-sage-600 relative"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {/* Cart badge - could be added later */}
-            </Button>
+            <Link to="/cart">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-600 hover:text-sage-600 relative"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
+                    {totalItems > 99 ? "99+" : totalItems}
+                  </span>
+                )}
+              </Button>
+            </Link>
           </div>
         </div>
       </header>

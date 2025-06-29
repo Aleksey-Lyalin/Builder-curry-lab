@@ -2,12 +2,35 @@ import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Perfume } from "@/data/perfumes";
+import { useCart } from "@/contexts/CartContext";
+import QuantitySelector from "./QuantitySelector";
 
 interface ProductCardProps {
   perfume: Perfume;
 }
 
 const ProductCard = ({ perfume }: ProductCardProps) => {
+  const { addToCart, updateQuantity, getItemQuantity } = useCart();
+  const quantity = getItemQuantity(perfume.id);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(perfume.id, perfume);
+  };
+
+  const handleIncrease = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    updateQuantity(perfume.id, quantity + 1);
+  };
+
+  const handleDecrease = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    updateQuantity(perfume.id, quantity - 1);
+  };
+
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden group hover:shadow-lg transition-shadow duration-200">
       <Link to={`/product/${perfume.id}`}>
@@ -50,14 +73,25 @@ const ProductCard = ({ perfume }: ProductCardProps) => {
         </div>
       </Link>
 
-      {/* Add to Cart Button - Outside Link */}
+      {/* Cart Controls - Outside Link */}
       <div className="px-4 pb-4">
-        <Button
-          className="w-full bg-sage-600 hover:bg-sage-700 text-white py-2.5 text-sm font-medium"
-          onClick={(e) => e.preventDefault()}
-        >
-          В корзину
-        </Button>
+        {quantity === 0 ? (
+          <Button
+            className="w-full bg-sage-600 hover:bg-sage-700 text-white py-2.5 text-sm font-medium"
+            onClick={handleAddToCart}
+          >
+            В корзину
+          </Button>
+        ) : (
+          <div className="w-full flex justify-center">
+            <QuantitySelector
+              quantity={quantity}
+              onIncrease={handleIncrease}
+              onDecrease={handleDecrease}
+              size="sm"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
