@@ -20,9 +20,10 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
             <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F42ef96d0429245c4b9208336c6d953e6%2F144af381c3ac43cbaed00a2ab2fb7ab7?format=webp&width=800"
+              src="https://cdn.builder.io/api/v1/image/assets%2F42ef96d0429245c4b9208336c6d953e6%2F03efb979addb4ebfbb3ad6d4da5974e7"
               alt="Little Daisy Perfume Shop"
-              className="h-12 w-auto object-contain"
+              className="w-auto object-contain"
+              style={{ height: "100px" }}
             />
           </Link>
 
@@ -33,7 +34,7 @@ const Header = () => {
               <Input
                 type="text"
                 placeholder="Поиск"
-                className="pl-12 pr-6 py-3 w-full h-12 text-base border-gray-300 focus:border-sage-500 focus:ring-sage-500"
+                className="pl-12 pr-6 py-3 w-full h-16 text-base border-gray-300 focus:border-sage-500 focus:ring-sage-500"
               />
             </div>
           </div>
