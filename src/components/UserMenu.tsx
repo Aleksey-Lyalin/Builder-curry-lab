@@ -77,7 +77,7 @@ const UserMenu = ({ onLoginClick }: UserMenuProps) => {
           onClick={toggleMenu}
           title={`Auth: ${isAuthenticated}, Role: ${user?.role || "none"}`}
         >
-          <User className="w-5 h-5" style={{ fontSize: "24px" }} />
+          <User className="w-8 h-8" style={{ fontSize: "24px" }} />
         </Button>
         {/* Temporary admin button */}
         {isAuthenticated && user?.role !== "admin" && (
