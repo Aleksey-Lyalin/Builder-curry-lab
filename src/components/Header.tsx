@@ -52,7 +52,10 @@ const Header = () => {
                   size="icon"
                   className="text-gray-600 hover:text-sage-600 relative"
                 >
-                  <MessageCircle className="w-6 h-6" />
+                  <MessageCircle
+                    className="w-6 h-6"
+                    style={{ fontSize: "14px" }}
+                  />
                   {user && user.unreadMessages > 0 && (
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {user.unreadMessages > 9 ? "9+" : user.unreadMessages}
