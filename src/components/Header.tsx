@@ -20,10 +20,10 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
             <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F42ef96d0429245c4b9208336c6d953e6%2F03efb979addb4ebfbb3ad6d4da5974e7"
+              src="https://cdn.builder.io/api/v1/image/assets%2F42ef96d0429245c4b9208336c6d953e6%2F4b95731791464060834cf3befcba2149?format=webp&width=800"
               alt="Little Daisy Perfume Shop"
-              className="w-auto object-contain"
-              style={{ height: "100px" }}
+              className="object-contain"
+              style={{ width: "207px", height: "76px" }}
             />
           </Link>
 
