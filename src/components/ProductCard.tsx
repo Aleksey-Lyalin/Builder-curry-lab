@@ -77,8 +77,19 @@ const ProductCard = ({ perfume }: ProductCardProps) => {
       <div className="px-4 pb-4">
         {quantity === 0 ? (
           <Button
-            className="w-full bg-sage-600 hover:bg-sage-700 text-white py-2.5 text-sm font-medium"
+            className="w-full text-white py-2.5 text-sm font-medium"
             onClick={handleAddToCart}
+            style={{
+              backgroundColor: "rgba(34, 34, 34, 1)",
+              borderRadius: "0",
+              transition: "background-color 0.15s",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = "#4B6FA5")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = "rgba(34, 34, 34, 1)")
+            }
           >
             В корзину
           </Button>
