@@ -2,11 +2,8 @@ import { Instagram, Facebook, Phone, Mail, MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div
-        className="max-w-7xl mx-auto px-4 py-12"
-        style={{ backgroundColor: "rgba(51, 51, 51, 1)" }}
-      >
+    <footer className="text-white" style={{ backgroundColor: "#333333" }}>
+      <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
@@ -24,7 +21,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-gray-300 text-sm">
-              Лучшие ароматы со всего мира. Оригинальная парфюмерия с гарантией
+              Лучшие ароматы со всего мира. Оригинальная парфюмерия с гара��тией
               качества.
             </p>
           </div>
