@@ -9,14 +9,12 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center">
               <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F42ef96d0429245c4b9208336c6d953e6%2Fb171aa7681864f288b6873a6b57c9f79?format=webp&width=800"
+                src="https://cdn.builder.io/api/v1/image/assets%2F42ef96d0429245c4b9208336c6d953e6%2Fc08c7f3fb5d54e98bf0dcbb9e41a5c38?format=webp&width=800"
                 alt="Little Daisy Perfume Shop"
                 className="object-contain"
                 style={{
-                  width: "155px",
+                  width: "243px",
                   height: "57px",
-                  filter:
-                    "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%)",
                 }}
               />
             </div>
@@ -82,7 +80,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-300 hover:text-sage-400 transition-colors"
                 >
-                  Мужс��ие ароматы
+                  Мужские ароматы
                 </a>
               </li>
               <li>
