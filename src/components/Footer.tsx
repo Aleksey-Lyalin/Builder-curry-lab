@@ -7,16 +7,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-sage-500 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-white rounded-sm flex items-center justify-center">
-                  <div className="w-2 h-2 bg-sage-500 rounded-full"></div>
-                </div>
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">LITTLE DAISY</h3>
-                <p className="text-xs text-gray-400">PERFUME SHOP</p>
-              </div>
+            <div className="flex items-center">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F42ef96d0429245c4b9208336c6d953e6%2F4b95731791464060834cf3befcba2149?format=webp&width=800"
+                alt="Little Daisy Perfume Shop"
+                className="object-contain"
+                style={{ width: "155px", height: "57px" }}
+              />
             </div>
             <p className="text-gray-300 text-sm">
               Лучшие ароматы со всего мира. Оригинальная парфюмерия с гарантией
