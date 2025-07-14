@@ -54,7 +54,7 @@ const Header = () => {
                 >
                   <MessageCircle
                     className="w-6 h-6"
-                    style={{ fontSize: "14px" }}
+                    style={{ fontSize: "14px", width: "30px", height: "30px" }}
                   />
                   {user && user.unreadMessages > 0 && (
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -78,7 +78,10 @@ const Header = () => {
                   }
                 }}
               >
-                <Heart className="w-6 h-6" />
+                <Heart
+                  className="w-6 h-6"
+                  style={{ width: "30px", height: "30px" }}
+                />
                 {isAuthenticated && user && user.favorites.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-sage-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {user.favorites.length > 9 ? "9+" : user.favorites.length}
@@ -94,7 +97,10 @@ const Header = () => {
                 size="icon"
                 className="text-gray-600 hover:text-sage-600 relative"
               >
-                <ShoppingCart className="w-6 h-6" />
+                <ShoppingCart
+                  className="w-6 h-6"
+                  style={{ width: "30px", height: "30px", marginTop: "-5px" }}
+                />
                 {totalItems > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
                     {totalItems > 99 ? "99+" : totalItems}
