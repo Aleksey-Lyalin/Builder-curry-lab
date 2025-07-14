@@ -3,7 +3,10 @@ import { Instagram, Facebook, Phone, Mail, MapPin } from "lucide-react";
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div
+        className="max-w-7xl mx-auto px-4 py-12"
+        style={{ backgroundColor: "rgba(51, 51, 51, 1)" }}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
@@ -21,7 +24,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-gray-300 text-sm">
-              Лучшие ароматы со всег�� мира. Оригинальная парфюмерия с гарантией
+              Лучшие ароматы со всего мира. Оригинальная парфюмерия с гарантией
               качества.
             </p>
           </div>
@@ -135,25 +138,6 @@ const Footer = () => {
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-sage-400" />
                 <span className="text-gray-300">Москва, ул. Арбат, 123</span>
-              </div>
-            </div>
-
-            {/* Social Media */}
-            <div className="mt-6">
-              <h5 className="font-medium mb-3">Следите за нами</h5>
-              <div className="flex gap-3">
-                <a
-                  href="#"
-                  className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sage-600 transition-colors"
-                >
-                  <Instagram className="w-4 h-4" />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sage-600 transition-colors"
-                >
-                  <Facebook className="w-4 h-4" />
-                </a>
               </div>
             </div>
           </div>
