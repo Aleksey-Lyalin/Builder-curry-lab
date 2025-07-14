@@ -13,7 +13,7 @@ const Footer = () => {
                 alt="Little Daisy Perfume Shop"
                 className="object-contain"
                 style={{
-                  width: "243px",
+                  width: "148px",
                   height: "57px",
                   filter:
                     "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%)",
@@ -21,7 +21,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-gray-300 text-sm">
-              Лучшие ароматы со всего мира. Оригинальная парфюмерия с гарантией
+              Лучшие ароматы со всег�� мира. Оригинальная парфюмерия с гарантией
               качества.
             </p>
           </div>
