@@ -136,4 +136,22 @@
   .hover\:bg-sage-700:hover {
     background-color: var(--primary-button-hover) !important;
   }
+
+  /* Remove border radius from all buttons and inputs */
+  button,
+  input,
+  select,
+  textarea,
+  .btn,
+  [role="button"] {
+    border-radius: 0 !important;
+  }
+
+  /* Hover effect for buttons */
+  button:hover,
+  .btn:hover,
+  [role="button"]:hover {
+    background-color: #4b6fa5 !important;
+    transition: background-color 0.15s ease;
+  }
 }
