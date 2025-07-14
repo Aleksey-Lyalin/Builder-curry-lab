@@ -118,7 +118,20 @@ const Index = () => {
             {/* Load More Button */}
             {filteredPerfumes.length > 0 && (
               <div className="text-center mt-12">
-                <button className="bg-sage-600 hover:bg-sage-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                <button
+                  className="text-white px-8 py-3 font-medium transition-colors"
+                  style={{
+                    backgroundColor: "rgba(34, 34, 34, 1)",
+                    borderRadius: "0",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.backgroundColor = "#4B6FA5")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.backgroundColor =
+                      "rgba(34, 34, 34, 1)")
+                  }
+                >
                   Показать еще
                 </button>
               </div>
