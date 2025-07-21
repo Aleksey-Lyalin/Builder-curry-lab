@@ -27,29 +27,29 @@ const ProductDescription = ({ perfume }: ProductDescriptionProps) => {
           <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-300"></div>
 
           {/* Top Notes */}
-          <div className="relative flex items-start mb-8">
+          <div className="relative flex items-start mb-4">
             <div className="flex-shrink-0 relative z-10">
-              <div className="w-12 h-12 bg-green-500 flex items-center justify-center text-white font-bold text-lg">
+              <div className="w-6 h-6 bg-green-500 flex items-center justify-center text-white font-bold text-sm">
                 1
               </div>
             </div>
-            <div className="ml-8 flex-grow bg-gray-50 p-6 border-l-4 border-green-500">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">
+            <div className="ml-4 flex-grow bg-gray-50 p-3 border-l-4 border-green-500">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-base font-semibold text-gray-900">
                   Верхние ноты
                 </h3>
-                <div className="text-xs text-gray-600 bg-white px-3 py-1 border font-medium">
+                <div className="text-xs text-gray-600 bg-white px-2 py-0.5 border font-medium">
                   ПЕРВЫЕ 15 МИНУТ
                 </div>
               </div>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-xs text-gray-600 mb-2">
                 Первое впечатление от аромата, самые летучие компоненты
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1">
                 {perfume.characteristics.topNotes.map((note, index) => (
                   <span
                     key={index}
-                    className="bg-white border border-green-200 text-green-800 px-3 py-1 text-sm hover:bg-green-50 transition-colors"
+                    className="bg-white border border-green-200 text-green-800 px-2 py-0.5 text-xs hover:bg-green-50 transition-colors"
                   >
                     {note}
                   </span>
@@ -59,29 +59,29 @@ const ProductDescription = ({ perfume }: ProductDescriptionProps) => {
           </div>
 
           {/* Heart Notes */}
-          <div className="relative flex items-start mb-8">
+          <div className="relative flex items-start mb-4">
             <div className="flex-shrink-0 relative z-10">
-              <div className="w-12 h-12 bg-rose-500 flex items-center justify-center text-white font-bold text-lg">
+              <div className="w-6 h-6 bg-rose-500 flex items-center justify-center text-white font-bold text-sm">
                 2
               </div>
             </div>
-            <div className="ml-8 flex-grow bg-gray-50 p-6 border-l-4 border-rose-500">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">
+            <div className="ml-4 flex-grow bg-gray-50 p-3 border-l-4 border-rose-500">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-base font-semibold text-gray-900">
                   Ноты сердца
                 </h3>
-                <div className="text-xs text-gray-600 bg-white px-3 py-1 border font-medium">
+                <div className="text-xs text-gray-600 bg-white px-2 py-0.5 border font-medium">
                   15-30 МИНУТ
                 </div>
               </div>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-xs text-gray-600 mb-2">
                 Основа аромата, его характер и индивидуальность
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1">
                 {perfume.characteristics.heartNotes.map((note, index) => (
                   <span
                     key={index}
-                    className="bg-white border border-rose-200 text-rose-800 px-3 py-1 text-sm hover:bg-rose-50 transition-colors"
+                    className="bg-white border border-rose-200 text-rose-800 px-2 py-0.5 text-xs hover:bg-rose-50 transition-colors"
                   >
                     {note}
                   </span>
@@ -93,27 +93,27 @@ const ProductDescription = ({ perfume }: ProductDescriptionProps) => {
           {/* Base Notes */}
           <div className="relative flex items-start">
             <div className="flex-shrink-0 relative z-10">
-              <div className="w-12 h-12 bg-amber-600 flex items-center justify-center text-white font-bold text-lg">
+              <div className="w-6 h-6 bg-amber-600 flex items-center justify-center text-white font-bold text-sm">
                 3
               </div>
             </div>
-            <div className="ml-8 flex-grow bg-gray-50 p-6 border-l-4 border-amber-600">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">
+            <div className="ml-4 flex-grow bg-gray-50 p-3 border-l-4 border-amber-600">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-base font-semibold text-gray-900">
                   Базовые ноты
                 </h3>
-                <div className="text-xs text-gray-600 bg-white px-3 py-1 border font-medium">
+                <div className="text-xs text-gray-600 bg-white px-2 py-0.5 border font-medium">
                   2-8 ЧАСОВ
                 </div>
               </div>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-xs text-gray-600 mb-2">
                 Завершающий аккорд, создающий стойкость и глубину аромата
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1">
                 {perfume.characteristics.baseNotes.map((note, index) => (
                   <span
                     key={index}
-                    className="bg-white border border-amber-200 text-amber-800 px-3 py-1 text-sm hover:bg-amber-50 transition-colors"
+                    className="bg-white border border-amber-200 text-amber-800 px-2 py-0.5 text-xs hover:bg-amber-50 transition-colors"
                   >
                     {note}
                   </span>
