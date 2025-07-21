@@ -21,27 +21,35 @@ const ProductDescription = ({ perfume }: ProductDescriptionProps) => {
           Характеристики
         </h2>
 
-        {/* Fragrance Notes - Alternative Timeline Design */}
-        <div className="bg-white border-2 border-gray-200 mb-8">
+        {/* Fragrance Notes - Elegant Timeline Design */}
+        <div className="relative mb-8">
+          {/* Vertical Timeline Line */}
+          <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-300"></div>
+
           {/* Top Notes */}
-          <div className="relative border-b-2 border-gray-200">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500"></div>
-            <div className="pl-8 pr-6 py-6">
-              <div className="flex items-center mb-4">
-                <div className="w-4 h-4 bg-green-500 mr-3"></div>
-                <h3 className="font-bold text-xl text-gray-900 uppercase tracking-wide">
+          <div className="relative flex items-start mb-8">
+            <div className="flex-shrink-0 relative z-10">
+              <div className="w-12 h-12 bg-green-500 flex items-center justify-center text-white font-bold text-lg">
+                1
+              </div>
+            </div>
+            <div className="ml-8 flex-grow bg-gray-50 p-6 border-l-4 border-green-500">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">
                   Верхние ноты
                 </h3>
-                <div className="ml-auto text-xs text-gray-500 bg-gray-100 px-2 py-1 font-medium">
-                  0-15 МИН
+                <div className="text-xs text-gray-600 bg-white px-3 py-1 border font-medium">
+                  ПЕРВЫЕ 15 МИНУТ
                 </div>
               </div>
+              <p className="text-sm text-gray-600 mb-4">
+                Первое впечатление от аромата, самые летучие компоненты
+              </p>
               <div className="flex flex-wrap gap-2">
                 {perfume.characteristics.topNotes.map((note, index) => (
                   <span
                     key={index}
-                    className="bg-gray-900 text-white px-4 py-2 text-sm font-medium border-2 border-gray-900 hover:bg-white hover:text-gray-900 transition-colors"
-                    style={{ borderRadius: '0' }}
+                    className="bg-white border border-green-200 text-green-800 px-3 py-1 text-sm hover:bg-green-50 transition-colors"
                   >
                     {note}
                   </span>
@@ -51,24 +59,29 @@ const ProductDescription = ({ perfume }: ProductDescriptionProps) => {
           </div>
 
           {/* Heart Notes */}
-          <div className="relative border-b-2 border-gray-200">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-orange-500"></div>
-            <div className="pl-8 pr-6 py-6">
-              <div className="flex items-center mb-4">
-                <div className="w-4 h-4 bg-orange-500 mr-3"></div>
-                <h3 className="font-bold text-xl text-gray-900 uppercase tracking-wide">
+          <div className="relative flex items-start mb-8">
+            <div className="flex-shrink-0 relative z-10">
+              <div className="w-12 h-12 bg-rose-500 flex items-center justify-center text-white font-bold text-lg">
+                2
+              </div>
+            </div>
+            <div className="ml-8 flex-grow bg-gray-50 p-6 border-l-4 border-rose-500">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">
                   Ноты сердца
                 </h3>
-                <div className="ml-auto text-xs text-gray-500 bg-gray-100 px-2 py-1 font-medium">
-                  15-30 МИН
+                <div className="text-xs text-gray-600 bg-white px-3 py-1 border font-medium">
+                  15-30 МИНУТ
                 </div>
               </div>
+              <p className="text-sm text-gray-600 mb-4">
+                Основа аромата, его характер и индивидуальность
+              </p>
               <div className="flex flex-wrap gap-2">
                 {perfume.characteristics.heartNotes.map((note, index) => (
                   <span
                     key={index}
-                    className="bg-gray-900 text-white px-4 py-2 text-sm font-medium border-2 border-gray-900 hover:bg-white hover:text-gray-900 transition-colors"
-                    style={{ borderRadius: '0' }}
+                    className="bg-white border border-rose-200 text-rose-800 px-3 py-1 text-sm hover:bg-rose-50 transition-colors"
                   >
                     {note}
                   </span>
@@ -78,24 +91,29 @@ const ProductDescription = ({ perfume }: ProductDescriptionProps) => {
           </div>
 
           {/* Base Notes */}
-          <div className="relative">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-600"></div>
-            <div className="pl-8 pr-6 py-6">
-              <div className="flex items-center mb-4">
-                <div className="w-4 h-4 bg-amber-600 mr-3"></div>
-                <h3 className="font-bold text-xl text-gray-900 uppercase tracking-wide">
+          <div className="relative flex items-start">
+            <div className="flex-shrink-0 relative z-10">
+              <div className="w-12 h-12 bg-amber-600 flex items-center justify-center text-white font-bold text-lg">
+                3
+              </div>
+            </div>
+            <div className="ml-8 flex-grow bg-gray-50 p-6 border-l-4 border-amber-600">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">
                   Базовые ноты
                 </h3>
-                <div className="ml-auto text-xs text-gray-500 bg-gray-100 px-2 py-1 font-medium">
+                <div className="text-xs text-gray-600 bg-white px-3 py-1 border font-medium">
                   2-8 ЧАСОВ
                 </div>
               </div>
+              <p className="text-sm text-gray-600 mb-4">
+                Завершающий аккорд, создающий стойкость и глубину аромата
+              </p>
               <div className="flex flex-wrap gap-2">
                 {perfume.characteristics.baseNotes.map((note, index) => (
                   <span
                     key={index}
-                    className="bg-gray-900 text-white px-4 py-2 text-sm font-medium border-2 border-gray-900 hover:bg-white hover:text-gray-900 transition-colors"
-                    style={{ borderRadius: '0' }}
+                    className="bg-white border border-amber-200 text-amber-800 px-3 py-1 text-sm hover:bg-amber-50 transition-colors"
                   >
                     {note}
                   </span>
